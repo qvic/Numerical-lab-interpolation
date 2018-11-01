@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="700" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <ProgressIndicator fx:id="progress" progress="0.0">
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </ProgressIndicator>
+                <RadioButton fx:id="buildSpline" mnemonicParsing="false" selected="true" text="Spline">
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                    <toggleGroup>
+                        <ToggleGroup fx:id="group" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="buildLagrange" mnemonicParsing="false" text="Lagrange" toggleGroup="$group">
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </RadioButton>
+                <RadioButton fx:id="buildNewton" mnemonicParsing="false" text="Newton" toggleGroup="$group">
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </RadioButton>
+                <RadioButton fx:id="buildLeastSquares" mnemonicParsing="false" text="Least squares fit, where m=" toggleGroup="$group">
+                </RadioButton>
+                <TextField fx:id="polynomialDegreeField" prefWidth="70.0" />
+
+            </items>
+        </ToolBar>
+        <BorderPane fx:id="lineChartPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="30.0" top="10.0" />
+            </padding>
+        </BorderPane>
+    </children>
+</AnchorPane>
