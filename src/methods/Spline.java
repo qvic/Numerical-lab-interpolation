@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Spline implements Interpolator {
 
-    private ArrayList<ArrayList<Double>> coeffs;
+    private ArrayList<List<Double>> coeffs;
     private ArrayList<Double> x;
 
     public Spline(List<XYChart.Data<Number, Number>> data) {
@@ -53,28 +53,26 @@ public class Spline implements Interpolator {
         }
 
         for (int i = 0; i < n; i++) {
-            ArrayList<Double> p = new ArrayList<>();
-            p.add(data.get(i).getYValue().doubleValue());
-            p.add(b[i]);
-            p.add(c[i]);
-            p.add(d[i]);
+            List<Double> p = List.of(data.get(i).getYValue().doubleValue(), b[i], c[i], d[i]);
             coeffs.add(p);
         }
     }
 
+    private double polynomialValue(double xValue, List<Double> coeffs) {
+        double result = coeffs.get(3);
+        result = result * xValue + coeffs.get(2);
+        result = result * xValue + coeffs.get(1);
+        result = result * xValue + coeffs.get(0);
+        return result;
+    }
+
     @Override
     public double calculate(double xValue) {
-        double result = Double.NaN;
         for (int i = 0; i < x.size() - 1; i++) {
             if (x.get(i + 1) >= xValue) {
-                double xi = x.get(i);
-                result = coeffs.get(i).get(0);
-                result += coeffs.get(i).get(1) * (xValue - xi);
-                result += coeffs.get(i).get(2) * Math.pow(xValue - xi, 2);
-                result += coeffs.get(i).get(3) * Math.pow(xValue - xi, 3);
-                break;
+                return polynomialValue(xValue - x.get(i), coeffs.get(i));
             }
         }
-        return result;
+        return Double.NaN;
     }
 }

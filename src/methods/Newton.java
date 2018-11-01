@@ -41,7 +41,7 @@ public class Newton implements Interpolator {
         double result = coeffs.get(0);
         double product = 1.0;
         for (int i = 1; i < coeffs.size(); i++) {
-            product *= xValue - x.get(i - 1);
+            product *= xValue - x.get(i-1);
             result += coeffs.get(i) * product;
         }
         return result;

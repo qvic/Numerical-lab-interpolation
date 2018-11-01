@@ -33,10 +33,8 @@ public class LeastSquares implements Interpolator {
 
     private double polynomialValue(double x) {
         double result = 0;
-        int power = 0;
-        for (Double a : polynomial) {
-            result += a * Math.pow(x, power);
-            power++;
+        for (int i = polynomial.size() - 1; i >= 0; i--) {
+            result += result * x + polynomial.get(i);
         }
         return result;
     }

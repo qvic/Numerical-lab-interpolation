@@ -80,7 +80,6 @@ public class ChartUtils {
     }
 
     public static void toggleSeriesByName(String name) {
-        indeces.get(name).getNode().setVisible(true);
         indeces.forEach((seriesName, series) -> {
             if (seriesName.equals(name)) {
                 series.getNode().setVisible(true);

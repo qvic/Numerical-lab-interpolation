@@ -34,11 +34,11 @@ public class MainController implements Initializable {
     private static final int X_TICK_UNIT = 5;
     private static final int Y_TICK_UNIT = 10;
 
-    private static final double PLOT_TICK = .1;
-    private static final double INTERPOLATION_TICK = .4;
+    private static final double PLOT_TICK = .2;
+    private static final double INTERPOLATION_TICK = .1;
     private static final int DEFAULT_M = 2;
 
-    private static final DoubleUnaryOperator function = (x) -> 20 * Math.sin(5 * x) + 0.1 * x * x - 50;
+    private static final DoubleUnaryOperator function = (x) -> Math.cos(Math.sin(x)) * x + 0.1 * x * x;
     private static final boolean USE_FILE = false;
     private static final Path CSV_FILE_PATH = Paths.get("/home/vic/Dropbox/projects/3kurs/numerical/lab_4/src/points.csv");
 
@@ -104,13 +104,13 @@ public class MainController implements Initializable {
                 );
                 updateProgress(1, 4);
 
-                ChartUtils.getSeriesByName("newton").setData(
-                        ChartUtils.generateSeriesData(new Newton(input), X_LOWER_BOUND, X_UPPER_BOUND, PLOT_TICK)
+                ChartUtils.getSeriesByName("lagrange").setData(
+                        ChartUtils.generateSeriesData(new Lagrange(input), X_LOWER_BOUND, X_UPPER_BOUND, PLOT_TICK)
                 );
                 updateProgress(2, 4);
 
-                ChartUtils.getSeriesByName("lagrange").setData(
-                        ChartUtils.generateSeriesData(new Lagrange(input), X_LOWER_BOUND, X_UPPER_BOUND, PLOT_TICK)
+                ChartUtils.getSeriesByName("newton").setData(
+                        ChartUtils.generateSeriesData(new Newton(input), X_LOWER_BOUND, X_UPPER_BOUND, PLOT_TICK)
                 );
                 updateProgress(3, 4);
 
@@ -142,9 +142,9 @@ public class MainController implements Initializable {
             if (newValue == buildSpline) {
                 ChartUtils.toggleSeriesByName("spline");
             } else if (newValue == buildLagrange) {
-                ChartUtils.toggleSeriesByName("newton");
-            } else if (newValue == buildNewton) {
                 ChartUtils.toggleSeriesByName("lagrange");
+            } else if (newValue == buildNewton) {
+                ChartUtils.toggleSeriesByName("newton");
             } else if (newValue == buildLeastSquares) {
                 ChartUtils.toggleSeriesByName("least squares");
             }
