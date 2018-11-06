@@ -6,36 +6,48 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import methods.Interpolator;
-import methods.Lagrange;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.DoubleUnaryOperator;
 import java.util.stream.Collectors;
 
 public class ChartUtils {
 
-    private static HashMap<String, XYChart.Series<Number, Number>> indeces = new HashMap<>();
+    private static ConcurrentMap<String, XYChart.Series<Number, Number>> indeces = new ConcurrentHashMap<>();
+    private static XYChart.Series<Number, Number> function;
 
     public static XYChart.Series<Number, Number> getSeriesByName(String name) {
         return indeces.get(name);
     }
 
-    public static void createSeries(LineChart<Number, Number> lineChart, String name, DoubleUnaryOperator f, double lowerBound, double upperBound, double tick) {
+    public static XYChart.Series<Number, Number> getFunctionSeries() {
+        return function;
+    }
+
+    public static void createFunctionSeries(LineChart<Number, Number> lineChart, String name) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName(name);
 
+        lineChart.getData().add(series);
+        function = series;
+    }
+
+    public static ObservableList<XYChart.Data<Number, Number>> generateFunctionData(DoubleUnaryOperator f, double lowerBound, double upperBound, double tick) {
+        ObservableList<XYChart.Data<Number, Number>> seriesData = FXCollections.observableArrayList();
+
         for (double i = lowerBound; i < upperBound; i += tick) {
             XYChart.Data<Number, Number> element = new XYChart.Data<>(i, f.applyAsDouble(i));
-            series.getData().add(element);
+            seriesData.add(element);
         }
-        lineChart.getData().add(series);
+
+        return seriesData;
     }
 
     public static void createSeries(LineChart<Number, Number> lineChart, String name) {

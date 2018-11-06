@@ -34,7 +34,7 @@ public class LeastSquares implements Interpolator {
     private double polynomialValue(double x) {
         double result = 0;
         for (int i = polynomial.size() - 1; i >= 0; i--) {
-            result += result * x + polynomial.get(i);
+            result = result * x + polynomial.get(i);
         }
         return result;
     }
